@@ -35,14 +35,25 @@
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log"
+      ]
+     
+    },
+    {
+      "source": "02",
+      "codebase": "02",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
       ],
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run lint"
       ]
     },
     {
-      "source": "02",
-      "codebase": "02",
+      "source": "03",
+      "codebase": "03",
       "ignore": [
         "node_modules",
         ".git",
