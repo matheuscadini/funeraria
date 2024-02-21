@@ -36,7 +36,6 @@
         "firebase-debug.log",
         "firebase-debug.*.log"
       ]
-     
     },
     {
       "source": "02",
@@ -71,6 +70,12 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   },
   "storage": {
