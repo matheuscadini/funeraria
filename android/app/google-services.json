@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "934331916847",
+    "firebase_url": "https://fir-funeraria-default-rtdb.firebaseio.com",
+    "project_id": "fir-funeraria",
+    "storage_bucket": "fir-funeraria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934331916847:android:109225c5f8393f3bec1cda",
+        "android_client_info": {
+          "package_name": "com.example.flutter_funeraria"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALJOnTb19j0oEyGBGMOq849OAJ39ABNlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
