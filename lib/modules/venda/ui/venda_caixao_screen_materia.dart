@@ -15,7 +15,9 @@ class CaixaoVendaMaterialScreen extends StatelessWidget {
       ),
       height: 525,
       width: 821,
-      child: Padding(
+      child: 
+      
+      Padding(
         padding: const EdgeInsets.fromLTRB(32, 42, 32, 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -17,39 +17,8 @@
         "firebase-debug.*.log"
       ]
     },
-    {
-      "source": "versaoum",
-      "codebase": "versaoum",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ]
-    },
-    {
-      "source": "01",
-      "codebase": "01",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ]
-    },
-    {
-      "source": "02",
-      "codebase": "02",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint"
-      ]
-    },
+    
+     
     {
       "source": "03",
       "codebase": "03",
@@ -65,7 +34,7 @@
     }
   ],
   "hosting": {
-    "public": "dist",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -43,7 +43,7 @@ class VendaDataTableModel implements TableDataModel {
       dataRow.onClick = () {
         vendaController.vendaSelectedEdition.value = list[i];
 
-        Get.dialog(CreateNewVendaScreen(vendaController: vendaController));
+        //Get.dialog(CreateNewVendaScreen(vendaController: vendaController, caixaoController: ,));
       };
       data.add(dataRow);
     }

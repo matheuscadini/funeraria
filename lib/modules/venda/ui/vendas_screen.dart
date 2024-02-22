@@ -3,10 +3,13 @@ import 'package:flutter_funeraria/core/models/table/caixao_table/caixao_data_tab
 import 'package:flutter_funeraria/core/models/table/venda_table/venda_data_table_model.dart';
 import 'package:flutter_funeraria/core/styles/text_extension.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
+import 'package:flutter_funeraria/modules/caixoes/ui/select_caixao_venda.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:flutter_funeraria/modules/venda/application/venda_controller.dart';
 import 'package:flutter_funeraria/modules/venda/ui/nova_venda_screen.dart';
+import 'package:flutter_funeraria/modules/venda/ui/venda_caixao_screen_materia.dart';
 import 'package:get/get.dart';
+import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/table/table_widget.dart';
 
 class VendasScreen extends StatefulWidget {
@@ -19,6 +22,7 @@ class VendasScreen extends StatefulWidget {
 class _VendasScreenState extends State<VendasScreen> {
   VendaController vendaController = VendaController();
   FunerariaController funerariaController = Get.find();
+  CaixaoController caixaoController = CaixaoController();
 
   @override
   void initState() {
@@ -41,25 +45,21 @@ class _VendasScreenState extends State<VendasScreen> {
                 Text(
                     "caixões Cadastrados: ${vendaController.listVendas.length}"),
                 const SizedBox(height: 15),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 16,
+                ButtonCreateNew(
+                  onPressed: () {
+                    Get.dialog(
+                      SimpleDialog(
+                        insetPadding: EdgeInsets.zero,
+                        contentPadding: EdgeInsets.zero,
+                        children: [
+                          CreateNewVendaScreen(
+                            vendaController: vendaController,
+                            caixaoController: caixaoController ,
+                          )
+                        ],
                       ),
-                    ),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                  ),
-                  child: const Text(
-                    'Nova Venda',
-                  ).textButtonRegister,
-                  onPressed: () => Get.dialog(
-                    CreateNewVendaScreen(
-                      vendaController: vendaController,
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
                 TableWidget(

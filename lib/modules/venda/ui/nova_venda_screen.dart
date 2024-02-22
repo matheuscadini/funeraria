@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/venda_model.dart';
 import 'package:flutter_funeraria/core/styles/text_extension.dart';
+import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/caixoes/ui/select_caixao_venda.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:flutter_funeraria/modules/venda/application/venda_controller.dart';
@@ -15,11 +16,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../core/styles/custom_colors.dart';
+import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
 class CreateNewVendaScreen extends StatefulWidget {
   VendaController vendaController;
+  CaixaoController caixaoController;
   late var imageFileScreen;
   late Uint8List file;
   RxBool imageLoaded = false.obs;
@@ -27,6 +30,7 @@ class CreateNewVendaScreen extends StatefulWidget {
 
   CreateNewVendaScreen({
     Key? key,
+    required this.caixaoController,
     required this.vendaController,
   }) : super(key: key);
 
@@ -189,24 +193,21 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                           height: 16,
                         ),
                         const Text('Caixão'),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(
-                                horizontal: 30,
-                                vertical: 16,
+                        ButtonCreateNew(
+                          onPressed: () {
+                            Get.dialog(
+                              SimpleDialog(
+                                insetPadding: EdgeInsets.zero,
+                                contentPadding: EdgeInsets.zero,
+                                children: [
+                                  VendaCaixaoWidget(
+                                    caixaoController: widget.caixaoController,
+                                    vendaController: widget.vendaController,
+                                  )
+                                ],
                               ),
-                            ),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black),
-                          ),
-                          child: const Text(
-                            'Nova Venda',
-                          ).textButtonRegister,
-                          onPressed: () => Get.dialog(
-                            CaixaoVendaMaterialScreen(
-                            ),
-                          ),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 8,
