@@ -47,12 +47,21 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
   TextEditingController textDescricao = TextEditingController();
   TextEditingController textObservacao = TextEditingController();
   TextEditingController textFornecedor = TextEditingController();
+  TextEditingController textQuantidadeNormal = TextEditingController();
+  TextEditingController textQuantidadeGordo = TextEditingController();
+  TextEditingController textQuantidadeAlto = TextEditingController();
+  TextEditingController textQuantidadeAltoGordo = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SimpleDialog(children: [
-        Padding(
+      () => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        height: 550,
+        width: 950,
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(32, 42, 32, 10),
           child: Column(
             children: [
@@ -175,42 +184,122 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Fornecedor'),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          controller: textFornecedor,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Text('Código'),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          controller: textCodigo,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Fornecedor'),
+                            SizedBox(
+                              width: 380,
+                              child: CustomTextFormField(
+                                controller: textFornecedor,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        const Text('Descrição'),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Código'),
+                            SizedBox(
+                              width: 380,
+                              child: CustomTextFormField(
+                                controller: textCodigo,
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        CustomTextFormField(
-                          controller: textDescricao,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Descrição'),
+                            SizedBox(
+                              width: 380,
+                              child: CustomTextFormField(
+                                controller: textDescricao,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          height: 16,
+                          height: 12,
                         ),
-                        const Text('Observações'),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Observações'),
+                            SizedBox(
+                              width: 380,
+                              child: CustomTextFormField(
+                                controller: textObservacao,
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        CustomTextFormField(
-                          controller: textObservacao,
+                        Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Normal'),
+                                SizedBox(
+                                  width: 150,
+                                  child: CustomTextFormField(
+                                    controller: textQuantidadeNormal,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                const Text('Gordo'),
+                                SizedBox(
+                                  width: 150,
+                                  child: CustomTextFormField(
+                                    controller: textQuantidadeGordo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Alto'),
+                                SizedBox(
+                                  width: 150,
+                                  child: CustomTextFormField(
+                                    controller: textQuantidadeAlto,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                const Text('Alto e Gordo'),
+                                SizedBox(
+                                  width: 150,
+                                  child: CustomTextFormField(
+                                    controller: textQuantidadeAltoGordo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                         const Divider(
                           thickness: 2,
@@ -220,7 +309,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                           height: 14,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(
@@ -252,7 +341,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
             ],
           ),
         ),
-      ]),
+      ),
     );
   }
 
@@ -310,15 +399,20 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
   void addCaixao() {
     print(funerariaController.funerariaSelecionada.value.id);
     widget.caixaoController.createNewCaixao(
-        CaixaoModel(
-          funerariaModel: funerariaController.funerariaSelecionada.value,
-          idCaixao: idCaixao.text,
-          funerariaId: funerariaController.funerariaSelecionada.value.id,
-          fornecedor: textFornecedor.text,
-          descricao: textDescricao.value.text,
-          codigo: textCodigo.text,
-        ),
-        widget.file);
+      CaixaoModel(
+        funerariaModel: funerariaController.funerariaSelecionada.value,
+        idCaixao: idCaixao.text,
+        funerariaId: funerariaController.funerariaSelecionada.value.id,
+        fornecedor: textFornecedor.text,
+        descricao: textDescricao.value.text,
+        codigo: textCodigo.text,
+        dataUltimaCompra: DateTime.now(),
+        quantidadeTipoNormal: int.parse(textQuantidadeNormal.value.text),
+        quantidadeGordoAlto: int.parse(textQuantidadeAltoGordo.value.text),
+        quantidadeTipoAlto: int.parse(textQuantidadeAlto.value.text),
+        quantidadeTipoGordo: int.parse(textQuantidadeGordo.value.text),
+      ),
+    );
   }
 
   void clearText() {
@@ -329,9 +423,12 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
   }
 
   Future pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    print(image!.path);
+    print(image.name);
+    //widget.foto = File(image.path);
     widget.imageFileScreen = image;
-    Uint8List data = await image!.readAsBytes();
+    Uint8List data = await image.readAsBytes();
     widget.file = data;
     widget.imageLoaded.value = true;
   }

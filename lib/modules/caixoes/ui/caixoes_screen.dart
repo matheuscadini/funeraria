@@ -4,6 +4,7 @@ import 'package:flutter_funeraria/core/styles/text_extension.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:get/get.dart';
+import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/table/table_widget.dart';
 import 'create_new_caixao_screen.dart';
 
@@ -39,25 +40,21 @@ class _CaixoesScreenState extends State<CaixoesScreen> {
                 Text(
                     "caixões Cadastrados: ${caixaoController.listCaixoes.length}"),
                 const SizedBox(height: 15),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 16,
+                ButtonCreateNew(
+                  buttonText: "Novo Caixão",
+                  onPressed: () {
+                    Get.dialog(
+                      SimpleDialog(
+                        insetPadding: EdgeInsets.zero,
+                        contentPadding: EdgeInsets.zero,
+                        children: [
+                          CreateNewCaixaoScreen(
+                            caixaoController: caixaoController,
+                          )
+                        ],
                       ),
-                    ),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                  ),
-                  child: const Text(
-                    'Cadastrar novo Caixão',
-                  ).textButtonRegister,
-                  onPressed: () => Get.dialog(
-                    CreateNewCaixaoScreen(
-                      caixaoController: caixaoController,
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
                 TableWidget(

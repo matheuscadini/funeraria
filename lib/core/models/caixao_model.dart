@@ -7,7 +7,7 @@ class CaixaoModel {
   int? quantidadeTipoNormal;
   int? quantidadeTipoGordo;
   int? quantidadeTipoAlto;
-  int? quantidadeTipoLuxo;
+  int? quantidadeGordoAlto;
   String? id;
   String? idCaixao;
   String? codigo;
@@ -23,7 +23,7 @@ class CaixaoModel {
     this.quantidadeTipoNormal,
     this.quantidadeTipoAlto,
     this.quantidadeTipoGordo,
-    this.quantidadeTipoLuxo,
+    this.quantidadeGordoAlto,
     this.id,
     this.idCaixao,
     this.codigo,
@@ -39,7 +39,7 @@ class CaixaoModel {
     quantidadeTipoNormal = json['quantidadeTipoNormal'];
     quantidadeTipoAlto = json['quantidadeTipoAlto'];
     quantidadeTipoGordo = json['quantidadeTipoGordo'];
-    quantidadeTipoLuxo = json['quantidadeTipoLuxo'];
+    quantidadeGordoAlto = json['quantidadeTipoGordoAlto'];
 
     id = json['id'];
     idCaixao = json['idCaixao'];
@@ -63,7 +63,7 @@ class CaixaoModel {
     data['quantidadeTipoNormal'] = quantidadeTipoNormal;
     data['quantidadeTipoAlto'] = quantidadeTipoAlto;
     data['quantidadeTipoGordo'] = quantidadeTipoGordo;
-    data['quantidadeTipoLuxo'] = quantidadeTipoLuxo;
+    data['quantidadeTipoGordoAlto'] = quantidadeGordoAlto;
     data['id'] = id;
     data['idCaixao'] = idCaixao;
     data['codigo'] = codigo;

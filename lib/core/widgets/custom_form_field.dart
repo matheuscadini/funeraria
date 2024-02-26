@@ -7,6 +7,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool isPasswordField;
   final IconData? icons;
   final String? hintLabel;
+  final TextInputType? keyboard;
 
   const CustomTextFormField({
     Key? key,
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isPasswordField = false,
     this.icons,
     this.hintLabel,
+    this.keyboard,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       height: 40,
       child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: Colors.white),
+        keyboardType: widget.keyboard,
+        style: const TextStyle(fontSize: 14, color: Colors.black),
         textAlignVertical: TextAlignVertical.center,
         obscureText: (widget.isPasswordField) ? !visible : false,
         controller: widget.controller,

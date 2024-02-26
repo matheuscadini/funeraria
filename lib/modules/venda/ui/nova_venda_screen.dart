@@ -1,22 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_funeraria/core/models/venda_model.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_funeraria/core/styles/text_extension.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/caixoes/ui/select_caixao_venda.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:flutter_funeraria/modules/venda/application/venda_controller.dart';
-import 'package:flutter_funeraria/modules/venda/ui/venda_caixao_screen_materia.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../core/styles/custom_colors.dart';
 import '../../../core/widgets/button_create_new.dart';
+import '../../../core/widgets/convert_monetario.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
@@ -52,14 +50,23 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
   TextEditingController idCaixao = TextEditingController();
   TextEditingController textCaixao = TextEditingController();
   TextEditingController textValor = TextEditingController();
+
   TextEditingController textObservacao = TextEditingController();
   TextEditingController textClient = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String tipo = "";
+    widget.vendaController.caixaoSelecionado.value == null;
+
     return Obx(
-      () => SimpleDialog(children: [
-        Padding(
+      () => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        height: 550,
+        width: 950,
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(32, 42, 32, 10),
           child: Column(
             children: [
@@ -99,14 +106,14 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 50,
+                    flex: 40,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: CustomColors.backgroundTextFormField,
                       ),
                       height: 369,
-                      child: widget.imageLoaded.value == false
+                      child: widget.caixaoController.isLoadingUpload == false
                           ? Stack(
                               alignment: Alignment.center,
                               children: [
@@ -115,24 +122,6 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.fitWidth,
-                                ),
-                                Positioned(
-                                  bottom: 18,
-                                  right: 18,
-                                  child: Container(
-                                      height: 32,
-                                      width: 32,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Color(0XFF313138)),
-                                      child: IconButton(
-                                          padding: EdgeInsets.zero,
-                                          color: CustomColors
-                                              .backgroundTextFormField,
-                                          onPressed: () async {
-                                            pickImage();
-                                          },
-                                          icon: const Icon(Icons.add))),
                                 ),
                               ],
                             )
@@ -143,7 +132,7 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.network(
-                                    widget.imageFileScreen.path,
+                                    widget.caixaoController.url.value,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -182,58 +171,97 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Cliente'),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          controller: textClient,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Text('Caixão'),
-                        ButtonCreateNew(
-                          onPressed: () {
-                            Get.dialog(
-                              SimpleDialog(
-                                insetPadding: EdgeInsets.zero,
-                                contentPadding: EdgeInsets.zero,
-                                children: [
-                                  VendaCaixaoWidget(
-                                    caixaoController: widget.caixaoController,
-                                    vendaController: widget.vendaController,
-                                  )
-                                ],
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Cliente').nomeCampo,
+                            SizedBox(
+                              width: 450,
+                              child: CustomTextFormField(
+                                controller: textClient,
+                                hintLabel: "Cliente",
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        CustomTextFormField(
-                          controller: textCaixao,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Caixão').nomeCampo,
+                            ButtonCreateNew(
+                              buttonText: "Caixão",
+                              onPressed: () {
+                                Get.dialog(
+                                  SimpleDialog(
+                                    insetPadding: EdgeInsets.zero,
+                                    contentPadding: EdgeInsets.zero,
+                                    children: [
+                                      VendaCaixaoWidget(
+                                        caixaoController:
+                                            widget.caixaoController,
+                                        vendaController: widget.vendaController,
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                                "${widget.vendaController.caixaoSelecionado.value.descricao} tipo:${widget.vendaController.tipoCaixaoSelecionado.value}"),
+                          ],
                         ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        const Text('Valor'),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Valor').nomeCampo,
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                                width: 450,
+                                child: TextFormField(
+                                    controller: textValor,
+                                    decoration: const InputDecoration(
+                                      icon: Icon(Icons.monetization_on),
+                                      labelText: 'Valor *',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      CurrencyPtBrInputFormatter()
+                                    ])),
+                          ],
+                        ),
                         const SizedBox(
-                          height: 8,
+                          height: 12,
                         ),
-                        CustomTextFormField(
-                          controller: textValor,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Text('Observações'),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          controller: textObservacao,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Observações').nomeCampo,
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 400,
+                              child: CustomTextFormField(
+                                controller: textObservacao,
+                              ),
+                            ),
+                          ],
                         ),
                         const Divider(
                           thickness: 2,
@@ -255,9 +283,19 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                                 fixedSize: const Size(152, 40),
                               ),
                               onPressed: () {
-                                if (widget.imageLoaded.value == false) {
+                                if (textClient.text == "") {
                                   snackbarWidget(
-                                      title: 'Uma imagem é necessária.',
+                                      title: 'Um cliente é necessario.',
+                                      icon: 'icons/warning_message.svg');
+                                } else if (textValor.text == "") {
+                                  snackbarWidget(
+                                      title: 'Insira o valor',
+                                      icon: 'icons/warning_message.svg');
+                                } else if (widget.vendaController
+                                        .caixaoSelecionado.value ==
+                                    null) {
+                                  snackbarWidget(
+                                      title: 'Selecione um caixao.',
                                       icon: 'icons/warning_message.svg');
                                 } else {
                                   addVenda();
@@ -275,7 +313,7 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
             ],
           ),
         ),
-      ]),
+      ),
     );
   }
 
@@ -332,11 +370,12 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
 
   void addVenda() {
     print(funerariaController.funerariaSelecionada.value.id);
-    widget.vendaController.createNewVenda(VendaModel(
-      cliente: textClient.value.text,
-      descricao: textObservacao.text,
-      valorVenda: textValor.text,
-    ));
+    widget.vendaController.createNewVenda(
+        textClient.value.text,
+        widget.vendaController.caixaoSelecionado.value,
+        widget.vendaController.tipoCaixaoSelecionado.value,
+        textValor.text,
+        textObservacao.text);
   }
 
   void clearText() {
@@ -344,13 +383,5 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
     textValor.clear();
     textObservacao.clear();
     textClient.clear();
-  }
-
-  Future pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    widget.imageFileScreen = image;
-    Uint8List data = await image!.readAsBytes();
-    widget.file = data;
-    widget.imageLoaded.value = true;
   }
 }
