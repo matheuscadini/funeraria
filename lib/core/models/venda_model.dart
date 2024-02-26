@@ -7,7 +7,7 @@ class VendaModel {
   String? cliente;
   String? id;
   CaixaoModel? caixaoModel;
-  String? codigo;
+  String? tipo;
   String? descricao;
   String? funerariaId;
   DateTime? dataVenda;
@@ -19,7 +19,7 @@ class VendaModel {
       {this.cliente,
       this.id,
       this.caixaoModel,
-      this.codigo,
+      this.tipo,
       this.descricao,
       this.funerariaId,
       this.dataVenda,
@@ -37,7 +37,7 @@ class VendaModel {
         : null;
     caixaoId = json['caixaoId'];
 
-    codigo = json['codigo'];
+    tipo = json['codigo'];
     descricao = json['descricao'];
     funerariaId = json['funerariaId'];
     if (json['dataVenda'] != null) {
@@ -60,7 +60,7 @@ class VendaModel {
       data['caixaoModel'] = caixaoModel!.toJson();
     }
     data['caixaoId'] = caixaoId;
-    data['codigo'] = codigo;
+    data['codigo'] = tipo;
     data['descricao'] = descricao;
     data['funerariaId'] = funerariaId;
     data['dataVenda'] = dataVenda;

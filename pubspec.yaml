@@ -48,6 +48,10 @@ dependencies:
   firebase_storage: ^11.0.16
   image_picker_web: ^3.0.0+1
   material: ^1.0.0+2
+  
+
+  intl:
+
 
 dev_dependencies:
   flutter_test:

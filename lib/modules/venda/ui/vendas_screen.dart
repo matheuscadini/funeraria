@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_funeraria/core/models/table/caixao_table/caixao_data_table_model.dart';
 import 'package:flutter_funeraria/core/models/table/venda_table/venda_data_table_model.dart';
-import 'package:flutter_funeraria/core/styles/text_extension.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
-import 'package:flutter_funeraria/modules/caixoes/ui/select_caixao_venda.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:flutter_funeraria/modules/venda/application/venda_controller.dart';
 import 'package:flutter_funeraria/modules/venda/ui/nova_venda_screen.dart';
-import 'package:flutter_funeraria/modules/venda/ui/venda_caixao_screen_materia.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/table/table_widget.dart';
@@ -42,10 +38,10 @@ class _VendasScreenState extends State<VendasScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                    "caixões Cadastrados: ${vendaController.listVendas.length}"),
+                Text("Vendas: ${vendaController.listVendas.length}"),
                 const SizedBox(height: 15),
                 ButtonCreateNew(
+                  buttonText: "Nova Venda",
                   onPressed: () {
                     Get.dialog(
                       SimpleDialog(
@@ -54,7 +50,7 @@ class _VendasScreenState extends State<VendasScreen> {
                         children: [
                           CreateNewVendaScreen(
                             vendaController: vendaController,
-                            caixaoController: caixaoController ,
+                            caixaoController: caixaoController,
                           )
                         ],
                       ),

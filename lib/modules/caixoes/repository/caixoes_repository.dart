@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as fb;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CaixaoRepository {
   Future<List<CaixaoModel>> getCaixoes() async {
@@ -29,6 +32,13 @@ class CaixaoRepository {
     return listaCaixoes;
   }
 
+  Future<String> getImageCaixao(String nameImage) {
+    return fb.FirebaseStorage.instance
+        .refFromURL('gs://fir-funeraria.appspot.com')
+        .child(nameImage)
+        .getDownloadURL();
+  }
+
   deleteCaixoes(String id) {
     FirebaseFirestore.instance.collection('caixoes').doc(id).delete();
   }
@@ -36,10 +46,10 @@ class CaixaoRepository {
   editCaixoes({required CaixaoModel caixaoEdit, required String id}) {
     FirebaseFirestore.instance.collection('caixoes').doc(id).update(
       {
-        'idPai': caixaoEdit.descricao,
-        'dataDesmama': caixaoEdit.dataUltimaVenda,
-        'idMae': caixaoEdit.codigo,
-        'dataNascimento': caixaoEdit.dataUltimaVenda,
+        'quantidadeTipoNormal': caixaoEdit.quantidadeTipoNormal,
+        'quantidadeTipoAlto': caixaoEdit.quantidadeTipoAlto,
+        'quantidadeTipoGordo': caixaoEdit.quantidadeTipoGordo,
+        'quantidadeTipoGordoAlto': caixaoEdit.quantidadeGordoAlto,
       },
     );
   }
@@ -51,13 +61,15 @@ class CaixaoRepository {
     );
   }
 
-  Future<CaixaoModel> newCaixao(CaixaoModel caixao, Uint8List foto) async {
-    String nome = '';
-    if (foto != null) {
-      nome = DateTime.now().microsecondsSinceEpoch.toString();
-      UploadTask storage = FirebaseStorage.instance.ref(nome).putData(foto);
-      caixao.valorVenda = "gs://fir-funeraria.appspot.com/$nome";
-    }
+  Future<CaixaoModel> newCaixao(CaixaoModel caixao) async {
+    //String nome = '';
+
+    // if (foto != null) {
+    //   nome = DateTime.now().microsecondsSinceEpoch.toString();
+    //   fb.UploadTask storage =
+    //       fb.FirebaseStorage.instance.ref(nome).putFile(foto);
+    //   caixao.valorVenda = nome;
+    // }
 
     final db = FirebaseFirestore.instance.collection('caixoes').doc();
     caixao.id = db.id;

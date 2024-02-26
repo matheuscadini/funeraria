@@ -22,14 +22,23 @@ class CaixaoVendaDataTableModel implements TableDataModel {
   }) {
     List<TableValueModel> headerValues = [
       TableValueModel(
-        description: 'Id Caixão',
-        flex: 2,
+        description: 'Modelo',
+        flex: 30,
       ),
       TableValueModel(
-        description: 'Sexo',
-        flex: 2,
+        description: 'Fornecedor',
+        flex: 30,
       ),
-      TableValueModel(description: 'Data Nascimento', flex: 2),
+      TableValueModel(
+        description: 'Normal',
+        flex: 15,
+      ),
+      TableValueModel(
+        description: 'Alto',
+        flex: 15,
+      ),
+      TableValueModel(description: 'Gordo', flex: 15),
+      TableValueModel(description: 'Alto e Gordo', flex: 15),
     ];
     header = TableRowModel(row: headerValues);
     list.sort((a, b) => (a.idCaixao)!.compareTo(b.idCaixao!));
@@ -41,8 +50,8 @@ class CaixaoVendaDataTableModel implements TableDataModel {
       );
       dataRow.onClick = () {
         vendaController.caixaoSelecionado.value = list[i];
-        Get.back();
-        // caixaoController.getFoto();
+
+        caixaoController.getFoto(list[i].valorVenda!);
 
         // Get.dialog(ModalSurveyWidget(
         //   caixaoController: caixaoController,
@@ -62,19 +71,37 @@ class CaixaoVendaDataTableModel implements TableDataModel {
       index: index,
     );
     TableValueModel idCaixao = TableValueModel(
-      description: caixao.idCaixao.toString(),
-      flex: 20,
+      description: caixao.descricao.toString(),
+      flex: 30,
       //isRelevant: true,
     );
     TableValueModel fornecedor = TableValueModel(
       description: caixao.fornecedor.toString(),
-      flex: 20,
+      flex: 30,
       //isRelevant: true,
     );
-    TableValueModel dataNascimento = TableValueModel(
-      description: getData(caixao),
+    TableValueModel normal = TableValueModel(
+      description: caixao.quantidadeTipoNormal.toString(),
       //("${animal.dataNascimento?.day}-${animal.dataNascimento?.month}-${animal.dataNascimento?.year} "),
-      flex: 20,
+      flex: 15,
+      //isRelevant: true,
+    );
+    TableValueModel alto = TableValueModel(
+      description: caixao.quantidadeTipoAlto.toString(),
+      //("${animal.dataNascimento?.day}-${animal.dataNascimento?.month}-${animal.dataNascimento?.year} "),
+      flex: 15,
+      //isRelevant: true,
+    );
+    TableValueModel gordo = TableValueModel(
+      description: caixao.quantidadeTipoGordo.toString(),
+      //("${animal.dataNascimento?.day}-${animal.dataNascimento?.month}-${animal.dataNascimento?.year} "),
+      flex: 15,
+      //isRelevant: true,
+    );
+    TableValueModel altoGordo = TableValueModel(
+      description: caixao.quantidadeGordoAlto.toString(),
+      //("${animal.dataNascimento?.day}-${animal.dataNascimento?.month}-${animal.dataNascimento?.year} "),
+      flex: 15,
       //isRelevant: true,
     );
 
@@ -116,7 +143,7 @@ class CaixaoVendaDataTableModel implements TableDataModel {
     //     );
     //   },
     // );
-    rowItem.row = [idCaixao, fornecedor, dataNascimento];
+    rowItem.row = [idCaixao, fornecedor, normal, alto, gordo, altoGordo];
     return rowItem;
   }
 

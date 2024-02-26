@@ -1,34 +1,31 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/repository/caixoes_repository.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CaixaoController extends GetxController {
   final CaixaoRepository caixaoRepository = CaixaoRepository();
   RxList<CaixaoModel> listCaixoes = <CaixaoModel>[].obs;
 
-
   RxList<CaixaoModel> listAllCaixoes = <CaixaoModel>[].obs;
   String idFuneraria = '';
   Rx<CaixaoModel> caixaoSelectedEdition = CaixaoModel().obs;
-  bool isLoadingUpload = false;
+  RxBool isLoadingUpload = false.obs;
+  final Rx url = ''.obs;
 
   getCaixoes() async {
     listAllCaixoes.value = await caixaoRepository.getCaixoes();
   }
 
-  getFoto() async{
-        Uint8List? foto = await FirebaseStorage.instance.ref("WIN_20230602_18_22_39_Pro.jpg").getData();
-
+  getFoto(String nameImage) async {
+    url.value = await caixaoRepository.getImageCaixao(nameImage);
+    isLoadingUpload.value = true;
   }
 
-  createNewCaixao(
-    CaixaoModel caixao, Uint8List foto
-  ) async {
-    caixao = await caixaoRepository.newCaixao(caixao, foto);
+  createNewCaixao(CaixaoModel caixao) async {
+    caixao = await caixaoRepository.newCaixao(caixao);
     listCaixoes.add(caixao);
   }
 

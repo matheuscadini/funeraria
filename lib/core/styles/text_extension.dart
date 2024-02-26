@@ -47,7 +47,7 @@ extension TextExtension on Text {
       );
   Text get proprietatioMainLayout => Text(
         data!,
-        style:  TextStyle(
+        style: TextStyle(
           fontFamily: 'Inter',
           fontSize: 14,
           color: CustomColors.textwhite,
@@ -63,6 +63,16 @@ extension TextExtension on Text {
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
           color: CustomColors.textwhite,
+        ),
+      );
+  Text get nomeCampo => Text(
+        data!,
+        style: const TextStyle(
+          fontFamily: 'Inter',
+          fontSize: 15,
+          color: Color(0xFF313138),
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
         ),
       );
 }
