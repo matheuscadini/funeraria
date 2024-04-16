@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
-import 'package:flutter_funeraria/modules/caixoes/ui/modal_survey_widget.dart';
 import 'package:get/get.dart';
-
 import '../../../../modules/caixoes/ui/view_caixao_screen.dart';
+import '../../../../modules/caixoes/ui/compra_caixao_widget.dart';
 import '../table_data_model.dart';
 import '../table_row_model.dart';
 import '../table_value_model.dart';
@@ -49,11 +49,17 @@ class CaixaoDataTableModel implements TableDataModel {
       );
       dataRow.onClick = () {
         caixaoController.caixaoSelectedEdition.value = list[i];
-        caixaoController.getFoto(list[i].valorVenda!);
-
-        Get.dialog(ModalSurveyWidget(
-          caixaoController: caixaoController,
-        ));
+        Get.dialog(
+          SimpleDialog(
+            insetPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            children: [
+              VisualizarCaixaoScreen(
+                caixaoController: caixaoController,
+              )
+            ],
+          ),
+        );
       };
       data.add(dataRow);
     }

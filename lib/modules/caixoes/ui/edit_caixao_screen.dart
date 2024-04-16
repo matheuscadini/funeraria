@@ -120,9 +120,10 @@ class EditCaixaoScreen extends StatelessWidget {
   }
 
   void editCaixao(CaixaoModel caixaoModel) {
-    caixaoController.editCaixoes(
-        caixaoEdit: caixaoModel,
-        id: caixaoController.caixaoSelectedEdition.value.id.toString());
+    //caixaoController.editCaixoes(
+    //  caixaoEdit: caixaoModel,
+    //  id: caixaoController.caixaoSelectedEdition.value.id.toString());
+    print("ok");
   }
 
   deleteCaixao(String id) {

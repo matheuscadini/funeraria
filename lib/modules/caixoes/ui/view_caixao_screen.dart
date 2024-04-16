@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../core/styles/custom_colors.dart';
 import 'edit_caixao_screen.dart';
 
+// ignore: must_be_immutable
 class ViewCaixaoScreen extends StatelessWidget {
   CaixaoController caixaoController;
 
@@ -16,130 +17,119 @@ class ViewCaixaoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      children: [
-        Center(
-          child: Container(
-              width: 1000,
-              height: 1000,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      fit: StackFit.expand,
-                      alignment: Alignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            caixaoController
-                                .caixaoSelectedEdition.value.valorVenda
-                                .toString(),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 18,
-                          right: 18,
-                          child: Container(
-                            height: 32,
-                            width: 32,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0XFF313138)),
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              color: CustomColors.backgroundTextFormField,
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.close_outlined,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        height: 1000,
+        width: 1000,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      caixaoController.caixaoSelectedEdition.value.valorVenda
+                          .toString(),
+                      fit: BoxFit.cover,
                     ),
-                    /* TODO
- DADOS que pode ser mostrado na tela  
-  double? ganhoPesoDiario;
-  String? destino;
-  double? valorVenda;
-  bool? touro;
-  String? nomeTouro; */
-                    textViewCaixao(
-                        label: 'ID Caixao',
-                        context: caixaoController
-                            .caixaoSelectedEdition.value.codigo
-                            .toString()),
-                    textViewCaixao(
-                        label: 'Data de Nascimento',
-                        context: caixaoController
-                            .caixaoSelectedEdition.value.fornecedor
-                            .toString()),
-                    textViewCaixao(
-                        label: 'Data da desmama',
-                        context: (caixaoController
-                            .caixaoSelectedEdition.value.descricao
-                            .toString())),
-                    textViewCaixao(
-                        label: 'ID mãe',
-                        context: caixaoController
-                            .caixaoSelectedEdition.value.codigo
-                            .toString()),
-                    textViewCaixao(
-                        label: 'ID pai',
-                        context: caixaoController
-                            .caixaoSelectedEdition.value.descricao
-                            .toString()),
-                    const SizedBox(
-                      height: 10,
+                  ),
+                  Positioned(
+                    bottom: 18,
+                    right: 18,
+                    child: Container(
+                      height: 32,
+                      width: 32,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Color(0XFF313138)),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        color: CustomColors.backgroundTextFormField,
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.close_outlined,
+                        ),
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.dialog(
-                              EditCaixaoScreen(
-                                caixaoController: caixaoController,
-                              ),
-                            );
-                          },
-                          child: const Text('Editar'),
+                  )
+                ],
+              ),
+
+              textViewCaixao(
+                  label: 'ID Caixao',
+                  context: caixaoController.caixaoSelectedEdition.value.codigo
+                      .toString()),
+              textViewCaixao(
+                  label: 'Data de Nascimento',
+                  context: caixaoController
+                      .caixaoSelectedEdition.value.fornecedor
+                      .toString()),
+              textViewCaixao(
+                  label: 'Data da desmama',
+                  context: (caixaoController
+                      .caixaoSelectedEdition.value.descricao
+                      .toString())),
+              textViewCaixao(
+                  label: 'ID mãe',
+                  context: caixaoController.caixaoSelectedEdition.value.codigo
+                      .toString()),
+              textViewCaixao(
+                  label: 'ID pai',
+                  context: caixaoController
+                      .caixaoSelectedEdition.value.descricao
+                      .toString()),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.dialog(
+                        EditCaixaoScreen(
+                          caixaoController: caixaoController,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            deleteCaixao(caixaoController
-                                .caixaoSelectedEdition.value.id
-                                .toString());
-                            Get.back();
-                          },
-                          child: const Text('Excluir'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          child: const Text('Cancelar'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              )),
-        )
-      ],
+                      );
+                    },
+                    child: const Text('Editar'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      deleteCaixao(caixaoController
+                          .caixaoSelectedEdition.value.id
+                          .toString());
+                      Get.back();
+                    },
+                    child: const Text('Excluir'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('Cancelar'),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  void editCaixao(CaixaoModel caixaoModel) {
-    caixaoController.editCaixoes(
-        caixaoEdit: caixaoModel,
-        id: caixaoController.caixaoSelectedEdition.value.id.toString());
-  }
+  // void editCaixao(CaixaoModel caixaoModel) {
+  //   caixaoController.editCaixoes(
+  //       caixaoEdit: caixaoModel,
+  //       id: caixaoController.caixaoSelectedEdition.value.id.toString());
+  // }
 
   deleteCaixao(String id) {
     caixaoController.deleteCaixoes(id);

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../styles/custom_colors.dart';
 
-
+// ignore: must_be_immutable
 class TextFormDateWidget extends StatelessWidget {
   TextEditingController dataVisita;
   String label;
@@ -21,12 +21,15 @@ class TextFormDateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30,
-      width: 200,
+      width: 150,
       child: TextFormField(
         readOnly: true,
         controller: dataVisita,
         decoration: InputDecoration(
-          labelStyle: const TextStyle(color: Color.fromARGB(221, 73, 73, 73)),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 50, 10),
+          labelStyle: const TextStyle(
+            color: Color.fromARGB(221, 73, 73, 73),
+          ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(width: 2, color: Colors.black),
           ),

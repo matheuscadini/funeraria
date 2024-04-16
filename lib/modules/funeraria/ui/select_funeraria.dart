@@ -140,11 +140,8 @@ class _SelectFarmState extends State<SelectFarm> {
       width: 200,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //shadowColor: Colors.yellow,
-            primary: CustomColors.backgroundTextFormField
-            //backgroundColor: Colors.white,
-            //TODO verificar essa cor
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap, 
+            backgroundColor: CustomColors.backgroundTextFormField
             ),
         onPressed: data.triggerMenu,
         child: const Text(

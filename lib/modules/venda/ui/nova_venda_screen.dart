@@ -17,6 +17,7 @@ import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/convert_monetario.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
+import '../../../core/widgets/text_form_date_widget.dart';
 
 class CreateNewVendaScreen extends StatefulWidget {
   VendaController vendaController;
@@ -46,17 +47,16 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
   var maskFormatter = MaskTextInputFormatter(
     mask: '',
   );
-
+  RxString datainicial = "".obs;
   TextEditingController idCaixao = TextEditingController();
   TextEditingController textCaixao = TextEditingController();
   TextEditingController textValor = TextEditingController();
-
+  TextEditingController dataVenda = TextEditingController();
   TextEditingController textObservacao = TextEditingController();
   TextEditingController textClient = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String tipo = "";
     widget.vendaController.caixaoSelecionado.value == null;
 
     return Obx(
@@ -194,7 +194,7 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                           children: [
                             const Text('Caixão').nomeCampo,
                             ButtonCreateNew(
-                              buttonText: "Caixão",
+                              buttonText: "Selecionar Caixão",
                               onPressed: () {
                                 Get.dialog(
                                   SimpleDialog(
@@ -214,36 +214,18 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                             const SizedBox(
                               height: 8,
                             ),
-                            Text(
-                                "${widget.vendaController.caixaoSelecionado.value.descricao} tipo:${widget.vendaController.tipoCaixaoSelecionado.value}"),
                           ],
                         ),
                         const SizedBox(
                           height: 12,
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Valor').nomeCampo,
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            SizedBox(
-                                width: 450,
-                                child: TextFormField(
-                                    controller: textValor,
-                                    decoration: const InputDecoration(
-                                      icon: Icon(Icons.monetization_on),
-                                      labelText: 'Valor *',
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      CurrencyPtBrInputFormatter()
-                                    ])),
-                          ],
-                        ),
+                        widget.vendaController.caixaoSelecionado.value
+                                    .descricao ==
+                                null
+                            ? const Text(
+                                "Caixão Selecionado: Caixão não Selecionado   \nModelo: Não Selecionado")
+                            : Text(
+                                "Caixão Selecionado: ${widget.vendaController.caixaoSelecionado.value.descricao} \nModelo: ${widget.vendaController.tipoCaixaoSelecionado.value}"),
                         const SizedBox(
                           height: 12,
                         ),
@@ -262,6 +244,41 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        Row(
+                          children: [
+                            const Text('Valor').nomeCampo,
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: TextFormField(
+                                controller: textValor,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.monetization_on),
+                                  labelText: 'Valor *',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  CurrencyPtBrInputFormatter()
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            const Text('Data da Venda').nomeCampo,
+                            TextFormDateWidget(
+                              dataVisita: dataVenda,
+                              label: 'Data',
+                              hint: 'Insira uma Data',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 15,
                         ),
                         const Divider(
                           thickness: 2,
@@ -292,6 +309,12 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                                       title: 'Insira o valor',
                                       icon: 'icons/warning_message.svg');
                                 } else if (widget.vendaController
+                                        .caixaoSelecionado.value.descricao ==
+                                    null) {
+                                  snackbarWidget(
+                                      title: 'Selecione um caixao.',
+                                      icon: 'icons/warning_message.svg');
+                                } else if (widget.vendaController
                                         .caixaoSelecionado.value ==
                                     null) {
                                   snackbarWidget(
@@ -317,65 +340,16 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
     );
   }
 
-  textDate({
-    required TextEditingController dateController,
-    required String label,
-  }) {
-    return SizedBox(
-      width: 300,
-      child: TextFormField(
-        readOnly: true,
-        controller: dateController,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
-        onTap: () async {
-          await showDatePicker(
-            builder: (context, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                    primary: CustomColors.background,
-                    onPrimary: CustomColors.textwhite,
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      backgroundColor: CustomColors.background,
-                    ),
-                  ),
-                ),
-                child: child!,
-              );
-            },
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2015),
-            lastDate: DateTime(2025),
-          ).then((selectedDate) {
-            if (selectedDate != null) {
-              dateController.text =
-                  DateFormat('dd-MM-yyyy').format(selectedDate);
-            }
-          });
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter date.';
-          }
-          return null;
-        },
-      ),
-    );
-  }
-
   void addVenda() {
-    print(funerariaController.funerariaSelecionada.value.id);
     widget.vendaController.createNewVenda(
-        textClient.value.text,
-        widget.vendaController.caixaoSelecionado.value,
-        widget.vendaController.tipoCaixaoSelecionado.value,
-        textValor.text,
-        textObservacao.text);
+      textClient.value.text,
+      widget.vendaController.caixaoSelecionado.value,
+      widget.vendaController.tipoCaixaoSelecionado.value,
+      textValor.text,
+      textObservacao.text,
+      DateFormat('dd/MM/yyyy').parse(dataVenda.text),
+    );
+    clearText();
   }
 
   void clearText() {

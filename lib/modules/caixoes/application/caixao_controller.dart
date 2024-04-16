@@ -1,14 +1,14 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/repository/caixoes_repository.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+
+import '../../funeraria/application/funeraria_controller.dart';
 
 class CaixaoController extends GetxController {
+  FunerariaController funerariaController = Get.find();
+
   final CaixaoRepository caixaoRepository = CaixaoRepository();
   RxList<CaixaoModel> listCaixoes = <CaixaoModel>[].obs;
-
   RxList<CaixaoModel> listAllCaixoes = <CaixaoModel>[].obs;
   String idFuneraria = '';
   Rx<CaixaoModel> caixaoSelectedEdition = CaixaoModel().obs;
@@ -24,18 +24,38 @@ class CaixaoController extends GetxController {
     isLoadingUpload.value = true;
   }
 
-  createNewCaixao(CaixaoModel caixao) async {
-    caixao = await caixaoRepository.newCaixao(caixao);
-    listCaixoes.add(caixao);
+  compraCaixao(CaixaoModel caixao, DateTime datacompra) async {
+    await caixaoRepository.compraCaixoes(
+      datacompra,
+      caixao.quantidadeTipoAlto!,
+      caixao.quantidadeTipoAlto!,
+      caixao.quantidadeTipoAlto!,
+      caixao.quantidadeTipoAlto!,
+      caixao.id.toString(),
+    );
+    //listCaixoes.elementAt(id == caixao.id);
+
+    Get.back();
+  }
+
+  novoCaixao(CaixaoModel caixao) async {
+    await caixaoRepository.newCaixao(caixao);
+    //listCaixoes.elementAt(id == caixao.id);
+
+    Get.back();
   }
 
   deleteCaixoes(String id) {
     caixaoRepository.deleteCaixoes(id);
   }
 
-  editCaixoes({required CaixaoModel caixaoEdit, required String id}) {
-    caixaoRepository.editCaixoes(caixaoEdit: caixaoEdit, id: id);
-  }
+  editCaixoes(
+      {required int quantidadeNormal,
+      required int quantidadeGordo,
+      required DateTime datacompra,
+      required int quantidadeAlto,
+      required int quantidadeAltoGordo,
+      required String id}) {}
 
   editStatusCaixoes(
       {required String id,

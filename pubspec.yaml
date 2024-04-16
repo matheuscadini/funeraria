@@ -48,7 +48,8 @@ dependencies:
   firebase_storage: ^11.0.16
   image_picker_web: ^3.0.0+1
   material: ^1.0.0+2
-  
+  cross_scroll: ^0.0.75
+
 
   intl:
 

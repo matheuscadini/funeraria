@@ -32,7 +32,7 @@ class VendaController extends GetxController {
   }
 
   createNewVenda(String cliente, CaixaoModel caixao, String tipo, String valor,
-      String observacao) async {
+      String observacao, DateTime dataVenda) async {
     VendaModel novaVenda = VendaModel();
     novaVenda.cliente = cliente;
     novaVenda.caixaoModel = caixao;
@@ -58,7 +58,7 @@ class VendaController extends GetxController {
     }
 
     novaVenda = await vendaRepository.newVenda(novaVenda);
-    await CaixaoRepository().editCaixoes(caixaoEdit: caixao, id: caixao.id!);
+    await CaixaoRepository().vendaCaixao(novaVenda);
     listVendas.add(novaVenda);
   }
 

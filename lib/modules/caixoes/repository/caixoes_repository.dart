@@ -1,11 +1,7 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fb;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_funeraria/core/models/venda_model.dart';
 
 class CaixaoRepository {
   Future<List<CaixaoModel>> getCaixoes() async {
@@ -43,13 +39,15 @@ class CaixaoRepository {
     FirebaseFirestore.instance.collection('caixoes').doc(id).delete();
   }
 
-  editCaixoes({required CaixaoModel caixaoEdit, required String id}) {
+  compraCaixoes(DateTime dataCompra, int quantidadeAlto, int quantidadeNormal,
+      int quantidadeGordo, int quantidadeAltoGordo, String id) {
     FirebaseFirestore.instance.collection('caixoes').doc(id).update(
       {
-        'quantidadeTipoNormal': caixaoEdit.quantidadeTipoNormal,
-        'quantidadeTipoAlto': caixaoEdit.quantidadeTipoAlto,
-        'quantidadeTipoGordo': caixaoEdit.quantidadeTipoGordo,
-        'quantidadeTipoGordoAlto': caixaoEdit.quantidadeGordoAlto,
+        'quantidadeTipoNormal': quantidadeNormal,
+        'quantidadeTipoAlto': quantidadeAlto,
+        'quantidadeTipoGordo': quantidadeGordo,
+        'quantidadeTipoGordoAlto': quantidadeAltoGordo,
+        'dataUltimaCompra': dataCompra,
       },
     );
   }
@@ -72,10 +70,19 @@ class CaixaoRepository {
     // }
 
     final db = FirebaseFirestore.instance.collection('caixoes').doc();
-    caixao.id = db.id;
+    caixao.idCaixao = db.id;
 
     final json = caixao.toJson();
     await db.set(json);
     return caixao;
+  }
+
+  Future<VendaModel> vendaCaixao(VendaModel venda) async {
+    final db = FirebaseFirestore.instance.collection('vendas').doc();
+    venda.id = db.id;
+
+    final json = venda.toJson();
+    await db.set(json);
+    return venda;
   }
 }

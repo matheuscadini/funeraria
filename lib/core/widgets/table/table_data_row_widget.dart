@@ -104,20 +104,20 @@ class TableDataRowWidget extends StatelessWidget {
     }
   }
 
-  _getImagePlaceholder({loading = false}) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      color: loading ? Colors.transparent : Colors.grey[300],
-      width: 50,
-      height: 50,
-      child: loading
-          ? const CircularProgressIndicator(
-              strokeWidth: 0.8,
-              color: Colors.greenAccent,
-            )
-          : Container(),
-    );
-  }
+  // _getImagePlaceholder({loading = false}) {
+  //   return Container(
+  //     padding: const EdgeInsets.all(8.0),
+  //     color: loading ? Colors.transparent : Colors.grey[300],
+  //     width: 50,
+  //     height: 50,
+  //     child: loading
+  //         ? const CircularProgressIndicator(
+  //             strokeWidth: 0.8,
+  //             color: Colors.greenAccent,
+  //           )
+  //         : Container(),
+  //   );
+  // }
 
   _getIconPath(TableValueType type) {
     switch (type) {

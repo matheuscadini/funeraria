@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 
 import '../styles/custom_colors.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormFieldNumber extends StatefulWidget {
   final TextEditingController controller;
   final bool isPasswordField;
   final IconData? icons;
   final String? hintLabel;
   final TextInputType? keyboard;
 
-  const CustomTextFormField({
+  const CustomTextFormFieldNumber({
     Key? key,
     required this.controller,
     this.isPasswordField = false,
@@ -20,10 +20,10 @@ class CustomTextFormField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+  State<CustomTextFormFieldNumber> createState() => _CustomTextFormFieldState();
 }
 
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
+class _CustomTextFormFieldState extends State<CustomTextFormFieldNumber> {
   bool visible = false;
 
   @override
@@ -36,6 +36,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         textAlignVertical: TextAlignVertical.center,
         obscureText: (widget.isPasswordField) ? !visible : false,
         controller: widget.controller,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         decoration: InputDecoration(
           //border: InputBorder.none,
           // icon: Icon(widget.icons, color: CustomColors.borderFormLogin),

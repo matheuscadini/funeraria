@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/table/caixao_table/caixao_venda_data_table_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
@@ -29,7 +28,8 @@ class VendaCaixaoWidget extends StatelessWidget {
     required this.caixaoController,
     //this.dashboardController,
   }) : super(key: key);
-
+  final ScrollController _horizontal = ScrollController(),
+      _vertical = ScrollController();
   @override
   Widget build(BuildContext context) {
     caixaoController.filterCaixoesByFuneraria(
@@ -45,137 +45,153 @@ class VendaCaixaoWidget extends StatelessWidget {
           width: 850,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(32, 42, 32, 10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Selecione o Caixão",
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                            alignment: Alignment.topRight,
-                            icon: SvgPicture.asset(
-                              'icons/close_round.svg',
-                              height: 24,
-                              width: 24,
-                            ),
-                            onPressed: () {
-                              Get.back();
-                            }),
-                      ],
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: 2,
-                  height: 10,
-                ).paddingOnly(bottom: 32),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 40,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: CustomColors.backgroundTextFormField,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Selecione o Caixão",
                         ),
-                        height: 369,
-                        child: caixaoController.isLoadingUpload == false
-                            ? Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Image.asset(
-                                    'icons/figure_survey_stack.png',
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  
-                                ],
-                              )
-                            : Stack(
-                                fit: StackFit.expand,
-                                alignment: Alignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.network(
-                                      caixaoController.url.value,
-                                      fit: BoxFit.cover,
+                      ),
+                      SingleChildScrollView(
+                        child: Row(
+                          children: [
+                            IconButton(
+                                alignment: Alignment.topRight,
+                                icon: SvgPicture.asset(
+                                  'icons/close_round.svg',
+                                  height: 24,
+                                  width: 24,
+                                ),
+                                onPressed: () {
+                                  Get.back();
+                                }),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 2,
+                    height: 10,
+                  ).paddingOnly(bottom: 32),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 40,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: CustomColors.backgroundTextFormField,
+                          ),
+                          height: 369,
+                          child: caixaoController.isLoadingUpload == false
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'icons/figure_survey_stack.png',
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.fitWidth,
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 18,
-                                    right: 18,
-                                    child: Container(
-                                      height: 32,
-                                      width: 32,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Color(0XFF313138)),
-                                      child: IconButton(
-                                        padding: EdgeInsets.zero,
-                                        color: CustomColors
-                                            .backgroundTextFormField,
-                                        onPressed: () {
-                                          caixaoController.isLoadingUpload.value = false;
-                                        },
-                                        icon: const Icon(
-                                          Icons.close_outlined,
-                                        ),
+                                  ],
+                                )
+                              : Stack(
+                                  fit: StackFit.expand,
+                                  alignment: Alignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        caixaoController.url.value,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                      ),
-                    ),
-                    const SizedBox(width: 40),
-                    Expanded(
-                      flex: 60,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: TableWidget(
-                          isLoading: false,
-                          itens: CaixaoVendaDataTableModel.fromList(
-                              list: caixaoController.listCaixoes,
-                              vendaController: vendaController,
-                              caixaoController: caixaoController),
+                                    Positioned(
+                                      bottom: 18,
+                                      right: 18,
+                                      child: Container(
+                                        height: 32,
+                                        width: 32,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0XFF313138)),
+                                        child: IconButton(
+                                          padding: EdgeInsets.zero,
+                                          color: CustomColors
+                                              .backgroundTextFormField,
+                                          onPressed: () {
+                                            caixaoController
+                                                .isLoadingUpload.value = false;
+                                          },
+                                          icon: const Icon(
+                                            Icons.close_outlined,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ButtonCreateNew(
-                      buttonText: "Caixão",
-                      onPressed: () {
-                        Get.dialog(
-                          SimpleDialog(
-                            insetPadding: EdgeInsets.zero,
-                            contentPadding: EdgeInsets.zero,
-                            children: [
-                              TipoCaixaoWidget(
-                                vendaController: vendaController,
-                              )
-                            ],
+                      const SizedBox(width: 40),
+                      Container(
+                        height: 400,
+                        width: 500,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SingleChildScrollView(
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TableWidget(
+                                    isLoading: false,
+                                    itens: CaixaoVendaDataTableModel.fromList(
+                                        list: caixaoController.listCaixoes,
+                                        vendaController: vendaController,
+                                        caixaoController: caixaoController),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                )
-              ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ButtonCreateNew(
+                        buttonText: "Caixão",
+                        onPressed: () {
+                          Get.dialog(
+                            SimpleDialog(
+                              insetPadding: EdgeInsets.zero,
+                              contentPadding: EdgeInsets.zero,
+                              children: [
+                                TipoCaixaoWidget(
+                                  vendaController: vendaController,
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         );

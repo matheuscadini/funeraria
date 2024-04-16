@@ -1,37 +1,35 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../core/styles/custom_colors.dart';
-import '../../../core/widgets/custom_form_field.dart';
+import '../../../core/widgets/custom_form_field_number.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
-class CreateNewCaixaoScreen extends StatefulWidget {
+class VisualizarCaixaoScreen extends StatefulWidget {
   CaixaoController caixaoController;
   late var imageFileScreen;
   late Uint8List file;
   RxBool imageLoaded = false.obs;
   late File foto;
 
-  CreateNewCaixaoScreen({
+  VisualizarCaixaoScreen({
     Key? key,
     required this.caixaoController,
   }) : super(key: key);
 
   @override
-  State<CreateNewCaixaoScreen> createState() => _CreateNewOxScreen();
+  State<VisualizarCaixaoScreen> createState() => _CreateNewOxScreen();
 }
 
-class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
+class _CreateNewOxScreen extends State<VisualizarCaixaoScreen> {
   FunerariaController funerariaController = Get.find();
   //AnimalController animalController = Get.find();
 
@@ -47,13 +45,17 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
   TextEditingController textDescricao = TextEditingController();
   TextEditingController textObservacao = TextEditingController();
   TextEditingController textFornecedor = TextEditingController();
-  TextEditingController textQuantidadeNormal = TextEditingController();
-  TextEditingController textQuantidadeGordo = TextEditingController();
-  TextEditingController textQuantidadeAlto = TextEditingController();
-  TextEditingController textQuantidadeAltoGordo = TextEditingController();
+  TextEditingController textQuantidadeNormal = TextEditingController(text: "0");
+  TextEditingController textQuantidadeGordo = TextEditingController(text: "0");
+  TextEditingController textQuantidadeAlto = TextEditingController(text: "0");
+  TextEditingController textQuantidadeAltoGordo =
+      TextEditingController(text: "0");
 
   @override
   Widget build(BuildContext context) {
+    widget.caixaoController.getFoto(
+        widget.caixaoController.caixaoSelectedEdition.value.valorVenda!);
+    widget.imageLoaded.value == true;
     return Obx(
       () => Container(
         decoration: BoxDecoration(
@@ -108,7 +110,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                         color: CustomColors.backgroundTextFormField,
                       ),
                       height: 369,
-                      child: widget.imageLoaded.value == false
+                      child: widget.caixaoController.isLoadingUpload == false
                           ? Stack(
                               alignment: Alignment.center,
                               children: [
@@ -145,7 +147,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.network(
-                                    widget.imageFileScreen.path,
+                                    widget.caixaoController.url.value,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -186,15 +188,11 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const Text('Fornecedor'),
-                            SizedBox(
-                              width: 380,
-                              child: CustomTextFormField(
-                                controller: textFornecedor,
-                              ),
-                            ),
+                            const Text('Fornecedor: '),
+                            Text(widget.caixaoController.caixaoSelectedEdition
+                                .value.fornecedor!)
                           ],
                         ),
                         const SizedBox(
@@ -207,9 +205,8 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                             const Text('Código'),
                             SizedBox(
                               width: 380,
-                              child: CustomTextFormField(
-                                controller: textCodigo,
-                              ),
+                              child: Text(widget.caixaoController
+                                  .caixaoSelectedEdition.value.codigo!),
                             ),
                           ],
                         ),
@@ -223,9 +220,8 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                             const Text('Descrição'),
                             SizedBox(
                               width: 380,
-                              child: CustomTextFormField(
-                                controller: textDescricao,
-                              ),
+                              child: Text(widget.caixaoController
+                                  .caixaoSelectedEdition.value.descricao!),
                             ),
                           ],
                         ),
@@ -235,13 +231,11 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Observações'),
+                          children: const [
+                            Text('Observações'),
                             SizedBox(
                               width: 380,
-                              child: CustomTextFormField(
-                                controller: textObservacao,
-                              ),
+                              child: Text("existe?"),
                             ),
                           ],
                         ),
@@ -252,25 +246,40 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text('Normal'),
+                                const Text('Normal:   '),
+                                Text(
+                                    "Estoque: ${widget.caixaoController.caixaoSelectedEdition.value.quantidadeTipoNormal}    Comprar:   "),
                                 SizedBox(
-                                  width: 150,
-                                  child: CustomTextFormField(
+                                  width: 60,
+                                  child: TextFormField(
                                     controller: textQuantidadeNormal,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Valor',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Text('Gordo'),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text('Gordo:   '),
+                                Text(
+                                    "Estoque: ${widget.caixaoController.caixaoSelectedEdition.value.quantidadeTipoGordo}    Comprar:   "),
                                 SizedBox(
-                                  width: 150,
-                                  child: CustomTextFormField(
+                                  width: 60,
+                                  child: CustomTextFormFieldNumber(
                                     controller: textQuantidadeGordo,
+                                    keyboard: TextInputType.number,
                                   ),
-                                ),
+                                )
                               ],
                             ),
                             const SizedBox(
@@ -278,25 +287,37 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text('Alto'),
+                                const Text('Alto:   '),
+                                Text(
+                                    "Estoque: ${widget.caixaoController.caixaoSelectedEdition.value.quantidadeTipoAlto}    Comprar:   "),
                                 SizedBox(
-                                  width: 150,
-                                  child: CustomTextFormField(
+                                  width: 60,
+                                  child: CustomTextFormFieldNumber(
                                     controller: textQuantidadeAlto,
+                                    keyboard: TextInputType.number,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Text('Alto e Gordo'),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text('Alto e Gordo:   '),
+                                Text(
+                                    "Estoque: ${widget.caixaoController.caixaoSelectedEdition.value.quantidadeGordoAlto}    Comprar:   "),
                                 SizedBox(
-                                  width: 150,
-                                  child: CustomTextFormField(
+                                  width: 60,
+                                  child: CustomTextFormFieldNumber(
                                     controller: textQuantidadeAltoGordo,
+                                    keyboard: TextInputType.number,
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ],
@@ -329,7 +350,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                                   addCaixao();
                                 }
                               },
-                              child: const Text('Publicar'),
+                              child: const Text('Comprar'),
                             ),
                           ],
                         )
@@ -345,73 +366,15 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
     );
   }
 
-  textDate({
-    required TextEditingController dateController,
-    required String label,
-  }) {
-    return SizedBox(
-      width: 300,
-      child: TextFormField(
-        readOnly: true,
-        controller: dateController,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
-        onTap: () async {
-          await showDatePicker(
-            builder: (context, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                    primary: CustomColors.background,
-                    onPrimary: CustomColors.textwhite,
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      backgroundColor: CustomColors.background,
-                    ),
-                  ),
-                ),
-                child: child!,
-              );
-            },
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2015),
-            lastDate: DateTime(2025),
-          ).then((selectedDate) {
-            if (selectedDate != null) {
-              dateController.text =
-                  DateFormat('dd-MM-yyyy').format(selectedDate);
-            }
-          });
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter date.';
-          }
-          return null;
-        },
-      ),
-    );
-  }
+  void addCaixao() async {
+    await widget.caixaoController.editCaixoes(
+        quantidadeAlto: int.parse(textQuantidadeAlto.value.text),
+        quantidadeNormal: int.parse(textQuantidadeNormal.value.text),
+        quantidadeGordo: int.parse(textQuantidadeGordo.value.text),
+        quantidadeAltoGordo: int.parse(textQuantidadeGordo.value.text),
+        datacompra: DateTime.now(),
+        id: widget.caixaoController.caixaoSelectedEdition.value.id!);
 
-  void addCaixao() {
-    widget.caixaoController.novoCaixao(
-      CaixaoModel(
-        idCaixao: idCaixao.text,
-        funerariaId: funerariaController.funerariaSelecionada.value.id,
-        fornecedor: textFornecedor.text,
-        descricao: textDescricao.value.text,
-        codigo: textCodigo.text,
-        dataUltimaCompra: DateTime.now(),
-        quantidadeTipoNormal: int.parse(textQuantidadeNormal.value.text),
-        quantidadeGordoAlto: int.parse(textQuantidadeAltoGordo.value.text),
-        quantidadeTipoAlto: int.parse(textQuantidadeAlto.value.text),
-        quantidadeTipoGordo: int.parse(textQuantidadeGordo.value.text),
-      ),
-    );
-    //);
     clearText();
     snackbarWidget(
         title: 'Caixão Cadastrado com Sucesso.', icon: 'icons/Key.svg');

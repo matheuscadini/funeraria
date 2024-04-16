@@ -5,7 +5,7 @@ class ButtonCreateNew extends StatelessWidget {
   final void Function()? onPressed;
   final String buttonText;
 
-  const ButtonCreateNew({ 
+  const ButtonCreateNew({
     Key? key,
     this.onPressed,
     this.buttonText = 'Create new',
@@ -16,12 +16,9 @@ class ButtonCreateNew extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        
-        
-        fixedSize: const Size(114, 35),
+        fixedSize: const Size(150, 35),
         side: const BorderSide(
           width: 1.0,
-          
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
