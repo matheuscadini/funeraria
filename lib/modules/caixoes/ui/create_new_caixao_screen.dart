@@ -15,6 +15,7 @@ import '../../../core/styles/custom_colors.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
+// ignore: must_be_immutable
 class CreateNewCaixaoScreen extends StatefulWidget {
   CaixaoController caixaoController;
   late var imageFileScreen;
@@ -397,18 +398,34 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
   }
 
   void addCaixao() {
+    int quantidadeCaixaonormal = 0;
+    int quantidadeCaixaoAlto = 0;
+    int quantidadeCaixaoAltoGordo = 0;
+    int quantidadeCaixaoGordo = 0;
+    if (textQuantidadeNormal.value.text.isNotEmpty) {
+      quantidadeCaixaonormal = int.parse(textQuantidadeNormal.value.text);
+    }
+    if (textQuantidadeAlto.value.text.isNotEmpty) {
+      quantidadeCaixaoAlto = int.parse(textQuantidadeAlto.value.text);
+    }
+    if (textQuantidadeAltoGordo.value.text.isNotEmpty) {
+      quantidadeCaixaoAltoGordo = int.parse(textQuantidadeAltoGordo.value.text);
+    }
+    if (textQuantidadeGordo.value.text.isNotEmpty) {
+      quantidadeCaixaoGordo = int.parse(textQuantidadeGordo.value.text);
+    }
     widget.caixaoController.novoCaixao(
       CaixaoModel(
         idCaixao: idCaixao.text,
         funerariaId: funerariaController.funerariaSelecionada.value.id,
-        fornecedor: textFornecedor.text,
+        fornecedor: textFornecedor.value.text,
         descricao: textDescricao.value.text,
-        codigo: textCodigo.text,
+        codigo: textCodigo.value.text,
         dataUltimaCompra: DateTime.now(),
-        quantidadeTipoNormal: int.parse(textQuantidadeNormal.value.text),
-        quantidadeGordoAlto: int.parse(textQuantidadeAltoGordo.value.text),
-        quantidadeTipoAlto: int.parse(textQuantidadeAlto.value.text),
-        quantidadeTipoGordo: int.parse(textQuantidadeGordo.value.text),
+        quantidadeTipoNormal: quantidadeCaixaonormal,
+        quantidadeGordoAlto: quantidadeCaixaoAltoGordo,
+        quantidadeTipoAlto: quantidadeCaixaoAlto,
+        quantidadeTipoGordo: quantidadeCaixaoGordo,
       ),
     );
     //);
@@ -429,7 +446,7 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
     widget.imageLoaded.value == false;
   }
 
-  Future pickImage() async {
+  pickImage() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     //widget.foto = File(image.path);

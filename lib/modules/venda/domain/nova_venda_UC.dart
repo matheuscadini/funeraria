@@ -1,14 +1,13 @@
 import 'package:flutter_funeraria/core/models/venda_model.dart';
 import 'package:flutter_funeraria/modules/venda/repository/venda_repository.dart';
-
-import '../../../core/models/caixao_model.dart';
+import 'dart:async';
 
 class NovaVendaUC {
   final VendaRepository vendaRepository;
 
   NovaVendaUC({required this.vendaRepository});
 
-  Future<bool> call({
+  FutureOr<bool> call({
     required VendaModel novaVenda,
     
     

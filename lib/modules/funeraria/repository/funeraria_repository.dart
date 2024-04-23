@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'dart:async';
 import '../../../core/models/funeraria_model.dart';
 
 class FunerariaRepository {
-  Future<List<FunerariaModel>> getFuneraria() async {
+  FutureOr<List<FunerariaModel>> getFuneraria() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('funerarias').get();
 

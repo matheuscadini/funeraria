@@ -1,16 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'core/initial_binding.dart';
 import 'core/routes/routes_getx.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
           apiKey: "AIzaSyATt4XBKXgM-lzKN-aa1uoix6XMbz4cDb8",
           projectId: "fir-funeraria",
           messagingSenderId: "934331916847",
@@ -105,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),

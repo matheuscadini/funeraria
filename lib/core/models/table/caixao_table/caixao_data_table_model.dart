@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:get/get.dart';
-import '../../../../modules/caixoes/ui/view_caixao_screen.dart';
 import '../../../../modules/caixoes/ui/compra_caixao_widget.dart';
 import '../table_data_model.dart';
 import '../table_row_model.dart';

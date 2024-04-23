@@ -199,7 +199,7 @@ class VendaCaixaoWidget extends StatelessWidget {
     );
   }
 
-  Future pickImage() async {
+   pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     imageFileScreen = image;
     Uint8List data = await image!.readAsBytes();

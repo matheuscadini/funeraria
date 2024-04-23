@@ -49,7 +49,7 @@ class TextFormDateWidget extends StatelessWidget {
                   ),
                   textButtonTheme: TextButtonThemeData(
                     style: TextButton.styleFrom(
-                      primary: CustomColors.textwhite,
+                      //primary: CustomColors.textwhite,
                       backgroundColor: CustomColors.background,
                     ),
                   ),

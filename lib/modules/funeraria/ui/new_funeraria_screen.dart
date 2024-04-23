@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/funeraria_model.dart';
 
@@ -84,7 +84,7 @@ class _NovaFunerariaScreenState extends State<NovaFunerariaScreen> {
     ));
   }
 
-  Future cadastrar() async {
+  FutureOr cadastrar() async {
     final db = FirebaseFirestore.instance.collection('funerarias').doc();
     final funeraria = FunerariaModel(
         id: db.id,

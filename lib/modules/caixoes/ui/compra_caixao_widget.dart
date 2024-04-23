@@ -342,13 +342,7 @@ class _CreateNewOxScreen extends State<VisualizarCaixaoScreen> {
                                 fixedSize: const Size(152, 40),
                               ),
                               onPressed: () {
-                                if (widget.imageLoaded.value == false) {
-                                  snackbarWidget(
-                                      title: 'Uma imagem é necessária.',
-                                      icon: 'icons/warning_message.svg');
-                                } else {
-                                  addCaixao();
-                                }
+                                compraCaixao();
                               },
                               child: const Text('Comprar'),
                             ),
@@ -366,12 +360,20 @@ class _CreateNewOxScreen extends State<VisualizarCaixaoScreen> {
     );
   }
 
-  void addCaixao() async {
+  void compraCaixao() async {
     await widget.caixaoController.editCaixoes(
-        quantidadeAlto: int.parse(textQuantidadeAlto.value.text),
-        quantidadeNormal: int.parse(textQuantidadeNormal.value.text),
-        quantidadeGordo: int.parse(textQuantidadeGordo.value.text),
-        quantidadeAltoGordo: int.parse(textQuantidadeGordo.value.text),
+        quantidadeAlto: int.parse(textQuantidadeAlto.value.text) +
+            widget.caixaoController.caixaoSelectedEdition.value
+                .quantidadeTipoAlto!,
+        quantidadeNormal: int.parse(textQuantidadeNormal.value.text) +
+            widget.caixaoController.caixaoSelectedEdition.value
+                .quantidadeTipoNormal!,
+        quantidadeGordo: int.parse(textQuantidadeGordo.value.text) +
+            widget.caixaoController.caixaoSelectedEdition.value
+                .quantidadeTipoGordo!,
+        quantidadeAltoGordo: int.parse(textQuantidadeAltoGordo.value.text) +
+            widget.caixaoController.caixaoSelectedEdition.value
+                .quantidadeGordoAlto!,
         datacompra: DateTime.now(),
         id: widget.caixaoController.caixaoSelectedEdition.value.id!);
 
@@ -392,7 +394,7 @@ class _CreateNewOxScreen extends State<VisualizarCaixaoScreen> {
     widget.imageLoaded.value == false;
   }
 
-  Future pickImage() async {
+  pickImage() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     //widget.foto = File(image.path);

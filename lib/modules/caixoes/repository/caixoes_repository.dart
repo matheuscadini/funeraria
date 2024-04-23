@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fb;
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/core/models/venda_model.dart';
+import 'dart:async';
 
 class CaixaoRepository {
-  Future<List<CaixaoModel>> getCaixoes() async {
+  FutureOr<List<CaixaoModel>> getCaixoes() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('caixoes').get();
 
@@ -14,7 +15,7 @@ class CaixaoRepository {
     return listaCaixoes;
   }
 
-  Future<List<CaixaoModel>> findCaixoes(String idFuneraria) async {
+  FutureOr<List<CaixaoModel>> findCaixoes(String idFuneraria) async {
     QuerySnapshot<Map<String, dynamic>> searchCaixoes = await FirebaseFirestore
         .instance
         .collection('caixoes')
@@ -28,7 +29,7 @@ class CaixaoRepository {
     return listaCaixoes;
   }
 
-  Future<String> getImageCaixao(String nameImage) {
+  FutureOr<String> getImageCaixao(String nameImage) {
     return fb.FirebaseStorage.instance
         .refFromURL('gs://fir-funeraria.appspot.com')
         .child(nameImage)
@@ -50,6 +51,7 @@ class CaixaoRepository {
         'dataUltimaCompra': dataCompra,
       },
     );
+    print("tudo ok");
   }
 
   editStatusCaixoes(
@@ -59,7 +61,7 @@ class CaixaoRepository {
     );
   }
 
-  Future<CaixaoModel> newCaixao(CaixaoModel caixao) async {
+  FutureOr<CaixaoModel> newCaixao(CaixaoModel caixao) async {
     //String nome = '';
 
     // if (foto != null) {
@@ -74,10 +76,11 @@ class CaixaoRepository {
 
     final json = caixao.toJson();
     await db.set(json);
+    print("chegou");
     return caixao;
   }
 
-  Future<VendaModel> vendaCaixao(VendaModel venda) async {
+  FutureOr<VendaModel> vendaCaixao(VendaModel venda) async {
     final db = FirebaseFirestore.instance.collection('vendas').doc();
     venda.id = db.id;
 

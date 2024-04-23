@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_funeraria/core/models/venda_model.dart';
+import 'dart:async';
 
 
 class VendaRepository {
-  Future<List<VendaModel>> getVenda() async {
+  FutureOr<List<VendaModel>> getVenda() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('vendas').get();
 
@@ -24,7 +25,7 @@ class VendaRepository {
     );
   }
 
-    Future<VendaModel> newVenda(VendaModel venda) async {
+    FutureOr<VendaModel> newVenda(VendaModel venda) async {
 
     final db = FirebaseFirestore.instance.collection('vendas').doc();
     venda.id = db.id;
@@ -34,7 +35,7 @@ class VendaRepository {
     return venda;
   }
 
-  Future<List<VendaModel>> findVendas(String idFuneraria) async {
+  FutureOr<List<VendaModel>> findVendas(String idFuneraria) async {
     QuerySnapshot<Map<String, dynamic>> searchVendas = await FirebaseFirestore
         .instance
         .collection('vendas')

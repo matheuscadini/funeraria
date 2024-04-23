@@ -17,7 +17,7 @@ class FunerariaController extends GetxController {
     getStorage();
   }
 
-  Future save(FunerariaModel funeraria) async {
+  save(FunerariaModel funeraria) async {
     localStorage['nome'] = funeraria.nome.toString();
     localStorage['id'] = funeraria.id.toString();
     localStorage['proprietario'] = funeraria.proprietario.toString();

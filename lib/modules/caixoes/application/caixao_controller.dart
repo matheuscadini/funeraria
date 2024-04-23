@@ -55,7 +55,10 @@ class CaixaoController extends GetxController {
       required DateTime datacompra,
       required int quantidadeAlto,
       required int quantidadeAltoGordo,
-      required String id}) {}
+      required String id}) {
+    caixaoRepository.compraCaixoes(DateTime.now(), quantidadeAlto,
+        quantidadeNormal, quantidadeGordo, quantidadeAltoGordo, id);
+  }
 
   editStatusCaixoes(
       {required String id,
