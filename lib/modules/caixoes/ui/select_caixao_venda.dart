@@ -14,6 +14,7 @@ import '../../../core/widgets/button_create_new.dart';
 import '../../../core/widgets/table/table_widget.dart';
 import '../../funeraria/application/funeraria_controller.dart';
 
+// ignore: must_be_immutable
 class VendaCaixaoWidget extends StatelessWidget {
   final VendaController vendaController;
   final CaixaoController caixaoController;

@@ -18,8 +18,6 @@ class ElevatedButtonHome extends StatelessWidget {
       height: 60,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(const Color.fromARGB(255, 128, 138, 131)),
         ),
         onPressed:  ontap,
         child: Text(title),

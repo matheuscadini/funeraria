@@ -16,7 +16,6 @@ class LoginScreen extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: CustomColors.background,
       body: Stack(children: [
         Center(
           child: Container(
@@ -58,8 +57,7 @@ class LoginScreen extends StatelessWidget {
                       vertical: 16,
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      CustomColors.blackCollor),
+
                 ),
                 child: const Text(
                   'Login',

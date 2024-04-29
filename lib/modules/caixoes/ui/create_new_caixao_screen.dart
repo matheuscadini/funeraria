@@ -15,6 +15,7 @@ import '../../../core/styles/custom_colors.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
+// ignore: must_be_immutable
 class CreateNewCaixaoScreen extends StatefulWidget {
   CaixaoController caixaoController;
   late var imageFileScreen;
@@ -313,7 +314,6 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(
-                                backgroundColor: CustomColors.background,
                                 side: BorderSide.none,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6),
@@ -365,11 +365,6 @@ class _CreateNewOxScreen extends State<CreateNewCaixaoScreen> {
                   colorScheme: ColorScheme.light(
                     primary: CustomColors.background,
                     onPrimary: CustomColors.textwhite,
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      backgroundColor: CustomColors.background,
-                    ),
                   ),
                 ),
                 child: child!,

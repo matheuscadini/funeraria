@@ -1,9 +1,6 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/repository/caixoes_repository.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class CaixaoController extends GetxController {
   final CaixaoRepository caixaoRepository = CaixaoRepository();
@@ -48,12 +45,11 @@ class CaixaoController extends GetxController {
 
   filterCaixoesByFuneraria(String idFuneraria) async {
     listCaixoes.value = await caixaoRepository.findCaixoes(idFuneraria);
-    listCaixoes.forEach(
-      (element) {
+    // ignore: unused_local_variable
+    for (var element in listCaixoes) {
         /* if (element.status == "apta" || element.status == "vazia") {
           listVacasAptas.add(element);
         } */
-      },
-    );
+      }
   }
 }

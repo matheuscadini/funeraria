@@ -1,11 +1,6 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fb;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_funeraria/core/models/caixao_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 class CaixaoRepository {
   Future<List<CaixaoModel>> getCaixoes() async {

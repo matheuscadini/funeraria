@@ -1,8 +1,3 @@
-import 'dart:html';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -97,7 +92,7 @@ class ModalSurveyWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Expanded(
                                   flex: 1,
@@ -114,7 +109,7 @@ class ModalSurveyWidget extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text('Data de criação'),
+                                      Text('Data de criação'),
                                     ],
                                   ),
                                 ),
@@ -153,7 +148,7 @@ class ModalSurveyWidget extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 60),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [],
                             )

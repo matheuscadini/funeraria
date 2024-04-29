@@ -2,8 +2,6 @@ import 'package:flutter_funeraria/core/models/caixao_model.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/caixoes/ui/modal_survey_widget.dart';
 import 'package:get/get.dart';
-
-import '../../../../modules/caixoes/ui/view_caixao_screen.dart';
 import '../table_data_model.dart';
 import '../table_row_model.dart';
 import '../table_value_model.dart';

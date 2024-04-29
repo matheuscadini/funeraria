@@ -6,7 +6,6 @@ import 'package:selection_menu/components_configurations.dart';
 import 'package:selection_menu/selection_menu.dart';
 
 import '../../../core/routes/routes_getx.dart';
-import '../../../core/styles/custom_colors.dart';
 
 class SelectFarm extends StatefulWidget {
   const SelectFarm({Key? key}) : super(key: key);
@@ -29,7 +28,6 @@ class _SelectFarmState extends State<SelectFarm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColors.background,
       body: Center(
         child: Obx(
           () => funerariaController.listaFunerarias.isEmpty
@@ -91,9 +89,6 @@ class _SelectFarmState extends State<SelectFarm> {
                                     vertical: 16,
                                   ),
                                 ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        const Color.fromARGB(31, 95, 95, 95)),
                               ),
                               child: const Text(
                                 'Avançar',
@@ -142,7 +137,7 @@ class _SelectFarmState extends State<SelectFarm> {
         style: ElevatedButton.styleFrom(
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             //shadowColor: Colors.yellow,
-            primary: CustomColors.backgroundTextFormField
+            //primary: CustomColors.backgroundTextFormField
             //backgroundColor: Colors.white,
             //TODO verificar essa cor
             ),

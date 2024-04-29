@@ -18,6 +18,7 @@ import '../../../core/widgets/convert_monetario.dart';
 import '../../../core/widgets/custom_form_field.dart';
 import '../../../core/widgets/snackbar_widget.dart';
 
+// ignore: must_be_immutable
 class CreateNewVendaScreen extends StatefulWidget {
   VendaController vendaController;
   CaixaoController caixaoController;
@@ -56,7 +57,6 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String tipo = "";
     widget.vendaController.caixaoSelecionado.value == null;
 
     return Obx(
@@ -275,7 +275,6 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(
-                                backgroundColor: CustomColors.background,
                                 side: BorderSide.none,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6),
@@ -291,15 +290,8 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                                   snackbarWidget(
                                       title: 'Insira o valor',
                                       icon: 'icons/warning_message.svg');
-                                } else if (widget.vendaController
-                                        .caixaoSelecionado.value ==
-                                    null) {
-                                  snackbarWidget(
-                                      title: 'Selecione um caixao.',
-                                      icon: 'icons/warning_message.svg');
-                                } else {
+                                } else
                                   addVenda();
-                                }
                               },
                               child: const Text('Publicar'),
                             ),
@@ -337,11 +329,6 @@ class _CreateNewOxScreen extends State<CreateNewVendaScreen> {
                   colorScheme: ColorScheme.light(
                     primary: CustomColors.background,
                     onPrimary: CustomColors.textwhite,
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      backgroundColor: CustomColors.background,
-                    ),
                   ),
                 ),
                 child: child!,

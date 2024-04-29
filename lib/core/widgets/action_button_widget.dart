@@ -24,8 +24,6 @@ class ActionButtonWidget extends StatelessWidget {
       height: 30,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(color),
         ),
         onPressed:  ontap,
         child: Text(title),

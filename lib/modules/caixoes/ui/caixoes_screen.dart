@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_funeraria/core/models/table/caixao_table/caixao_data_table_model.dart';
-import 'package:flutter_funeraria/core/styles/text_extension.dart';
 import 'package:flutter_funeraria/modules/caixoes/application/caixao_controller.dart';
 import 'package:flutter_funeraria/modules/funeraria/application/funeraria_controller.dart';
 import 'package:get/get.dart';

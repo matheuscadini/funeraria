@@ -49,7 +49,6 @@ class AlertDialogWidget extends StatelessWidget {
               children: [
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.red,
                     side: BorderSide.none,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
@@ -64,7 +63,6 @@ class AlertDialogWidget extends StatelessWidget {
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.red,
                     side: BorderSide.none,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                     fixedSize: const Size(152, 40),

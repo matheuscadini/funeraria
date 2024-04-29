@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({
@@ -23,8 +21,8 @@ class DashboardScreen extends StatelessWidget {
               color: Colors.white,
             ),
             width: 300,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
+            child: const Padding(
+              padding: EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -32,7 +30,7 @@ class DashboardScreen extends StatelessWidget {
                     height: 60,
                    
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 5,
                   ),
                   SizedBox(
@@ -40,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
                     height: 60,
                     
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 5,
                   ),
                   SizedBox(
@@ -48,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
                     height: 60,
                   
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 5,
                   ),
                 ],

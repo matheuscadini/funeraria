@@ -1,7 +1,5 @@
 import 'package:flutter_funeraria/core/models/venda_model.dart';
 import 'package:flutter_funeraria/modules/venda/application/venda_controller.dart';
-import 'package:flutter_funeraria/modules/venda/ui/nova_venda_screen.dart';
-import 'package:get/get.dart';
 import '../table_data_model.dart';
 import '../table_row_model.dart';
 import '../table_value_model.dart';

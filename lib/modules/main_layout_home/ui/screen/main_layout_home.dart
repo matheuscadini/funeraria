@@ -39,7 +39,6 @@ class MainLayoutScreen extends StatelessWidget {
         : Obx(
             () => Scaffold(
               appBar: AppBar(
-                backgroundColor: CustomColors.background,
                 elevation: 0,
                 title: Column(
                   children: [

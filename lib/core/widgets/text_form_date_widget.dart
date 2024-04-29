@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../styles/custom_colors.dart';
 
-
+// ignore: must_be_immutable
 class TextFormDateWidget extends StatelessWidget {
   TextEditingController dataVisita;
   String label;
@@ -43,12 +43,6 @@ class TextFormDateWidget extends StatelessWidget {
                 data: Theme.of(context).copyWith(
                   colorScheme: ColorScheme.light(
                     primary: CustomColors.background,
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      primary: CustomColors.textwhite,
-                      backgroundColor: CustomColors.background,
-                    ),
                   ),
                 ),
                 child: child!,
